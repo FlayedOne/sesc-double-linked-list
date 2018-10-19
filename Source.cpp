@@ -18,6 +18,7 @@ private:
 public:
 
 	LinkedList();
+	LinkedList(const LinkedList<T> &list);
 	~LinkedList();
 	T push_front(T value);
 	T pop_front();
@@ -73,7 +74,7 @@ int main() {
 		else if ("dump"==str) {
 			list->dump(std::cout);
 		}
-		else if ("dump-reserved"==str) {
+		else if ("dump-reversed"==str) {
 			list->dump_reversed(std::cout);
 		}
 		else {
@@ -87,6 +88,11 @@ template<class T>
 LinkedList<T>::LinkedList() {
 	entry = new cell();
 	length = 0;
+}
+
+template<class T>
+LinkedList<T>::LinkedList(const LinkedList<T> & list) :LinkedList() {
+	for (cell *i = list.entry->following; i != list.entry; i = i->following) this->push_back(i->value);
 }
 
 template<class T>
