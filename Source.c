@@ -69,7 +69,7 @@ int main() {
 		else if (!strcmp("dump", str)) {
 			dump(list, stdout);
 		}
-		else if (!strcmp("dump-reserved", str)) {
+		else if (!strcmp("dump-reversed", str)) {
 			dump_reserved(list, stdout);
 		}
 		else {
