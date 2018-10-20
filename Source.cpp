@@ -10,7 +10,7 @@ private:
 		cell *previous, *following;
 		T value;
 		cell();
-		cell(cell *previous, cell *following, T value);
+		cell(cell *previous, cell *following, const T & value);
 	};
 	cell *entry;
 	size_t length;
@@ -20,17 +20,17 @@ public:
 	LinkedList();
 	LinkedList(const LinkedList<T> &list);
 	~LinkedList();
-	T push_front(T value);
+	T push_front(const T & value);
 	T pop_front();
-	T push_back(T value);
+	T push_back(const T & value);
 	T pop_back();
-	T peek_front();
-	T peek_back();
+	T peek_front() const;
+	T peek_back() const;
 	void clear();
-	size_t size();
-	bool isEmpty() { return length == 0; }
-	void dump(std::ostream & out);
-	void dump_reversed(std::ostream & out);
+	size_t size() const { return length; }
+	bool isEmpty() const { return length == 0; }
+	void dump(std::ostream & out) const;
+	void dump_reversed(std::ostream & out) const;
 };
 
 int main() {
@@ -72,15 +72,18 @@ int main() {
 			std::cout << "empty\n";
 		}
 		else if ("dump"==str) {
-			list->dump(std::cout);
+			if (list->isEmpty()) std::cout << "empty\n";
+			else list->dump(std::cout);
 		}
 		else if ("dump-reversed"==str) {
-			list->dump_reversed(std::cout);
+			if (list->isEmpty()) std::cout << "empty\n";
+			else list->dump_reversed(std::cout);
 		}
 		else {
 			std::cout << "ERROR: UNKNOWN OPERATION " << str << std::endl;
 		}
 	}
+	delete list;
 	return 0;
 }
 
@@ -102,7 +105,7 @@ LinkedList<T>::~LinkedList() {
 }
 
 template <class T>
-T LinkedList<T>::push_front(T value) {
+T LinkedList<T>::push_front(const T & value) {
 	cell *_cell = new cell(entry, entry->following, value);
 	_cell->following->previous = _cell;
 	entry->following = _cell;
@@ -122,7 +125,7 @@ T LinkedList<T>::pop_front() {
 }
 
 template<class T>
-T LinkedList<T>::push_back(T value) {
+T LinkedList<T>::push_back(const T & value) {
 	cell *_cell = new cell(entry->previous, entry, value);
 	_cell->previous->following = _cell;
 	entry->previous = _cell;
@@ -141,12 +144,12 @@ T LinkedList<T>::pop_back() {
 }
 
 template<class T>
-T LinkedList<T>::peek_front() {
+T LinkedList<T>::peek_front() const {
 	return entry->following->value;
 }
 
 template<class T>
-T LinkedList<T>::peek_back() {
+T LinkedList<T>::peek_back() const {
 	return entry->previous->value;
 }
 
@@ -163,19 +166,14 @@ void LinkedList<T>::clear() {
 }
 
 template<class T>
-size_t LinkedList<T>::size() {
-	return length;
-}
-
-template<class T>
-void LinkedList<T>::dump(std::ostream & out) {
+void LinkedList<T>::dump(std::ostream & out) const {
 	for (cell *i = entry->following; i != entry; i = i->following)
 		out << i->value << " ";
 	out << "\n";
 }
 
 template<class T>
-void LinkedList<T>::dump_reversed(std::ostream & out) {
+void LinkedList<T>::dump_reversed(std::ostream & out) const {
 	for (cell *i = entry->previous; i != entry; i = i->previous)
 		out << i->value << " ";
 	out << "\n";
@@ -191,7 +189,7 @@ LinkedList<T>::cell::cell() {
 
 
 template<class T>
-LinkedList<T>::cell::cell(cell * prev, cell * foll, T value) {
+LinkedList<T>::cell::cell(cell * prev, cell * foll, const T & value) {
 	this->following = foll;
 	this->previous = prev;
 	this->value = value;
