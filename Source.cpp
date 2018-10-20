@@ -36,8 +36,8 @@ public:
 int main() {
 	std::string str;
 	LinkedList<int> *list = new LinkedList<int>();
-	while (!std::cin.eof()) {
-		std::cin >> str;
+	for (std::cin >> str; !std::cin.eof(); std::cin >> str) {
+		
 		if ("push-front" == str) {
 			int val;
 			std::cin >> val;
