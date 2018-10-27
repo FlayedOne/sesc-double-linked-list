@@ -162,6 +162,8 @@ void LinkedList<T>::clear() {
 		i = j;
 		j = j->following;
 	}
+	entry->following = entry;
+	entry->previous = entry;
 	length = 0;
 }
 
