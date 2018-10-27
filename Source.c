@@ -157,6 +157,8 @@ void clear(LLIST list) {
 		i = i_following;
 		i_following = i->following;
 	}
+	ENTRY->following = ENTRY;
+	ENTRY->previous = ENTRY;
 	list->length = 0;
 }
 
