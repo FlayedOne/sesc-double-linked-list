@@ -2,6 +2,6 @@ run: program
 	./program
 
 program: Source.c
-	g++ -Wall Source.cpp -o program
+	gcc -Wall -std=c11 Source.c -o program
 
 build: program
