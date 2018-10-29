@@ -1,7 +1,4 @@
-run: program
-	./program
-
-program: Source.c
-	gcc -Wall -std=c11 Source.c -o program
+run: Project.jar
+	java -jar Prject.jar
 
 build: program
